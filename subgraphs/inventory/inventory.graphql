@@ -1,5 +1,5 @@
 extend type Product @key(fields: "id") {
-  id: ID! @external
+  id: ID! @external @tag(name: "hi from inventory")
   dimensions: ProductDimension @external
   delivery(zip: String): DeliveryEstimates @requires(fields: "dimensions { size weight }")
 }
