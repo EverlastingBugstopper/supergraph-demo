@@ -16,6 +16,7 @@ Contents:
 * [CD Overview](#cd-overview)
 * [Deploying to Kubernetes](#deploying-to-kubernetes)
 * [Kubernetes-native GraphOps](#kubernetes-native-graphops)
+* [Open Telemetry](#open-telemetry)
 * [Learn More](#learn-more)
 
 ## Welcome
@@ -475,7 +476,7 @@ You can do custom CD with the following hooks and the `rover` CLI:
 * [supergraph build webhook](https://www.apollographql.com/blog/announcement/webhooks/) - pushes from Managed Federation.
 * `rover supergraph fetch` - pulls from the `Apollo Registry`.
 
-See [Kubernetes-native GraphOps](https://github.com/apollographql/supergraph-demo-k8s-graphops) to learn more about using custom CD with Kubernetes and GitOps.
+See [Kubernetes-native GraphOps](https://github.com/apollographql/supergraph-demo-k8s-graph-ops) to learn more about using custom CD with Kubernetes and GitOps.
 
 ## Deploying to Kubernetes
 
@@ -701,7 +702,28 @@ Deleting cluster "kind" ...
 
 ## Kubernetes-native GraphOps
 
-Large-scale graph operators use Kubernetes to run their Graph Router and Subgraph Services, with continuous app and service delivery. Kubernetes provides a mature control-plane for deploying and operating your graph using the container images produced by this `source repo` -- which propagates new docker image versions to the [supergraph-demo-k8s-graphops](https://github.com/apollographql/supergraph-demo-k8s-graphops) `config repo`, with `kustomize` configs to deploy to Kubernetes for `dev`, `stage`, and `prod` environments.
+Large-scale graph operators use Kubernetes to run their Graph Router and Subgraph Services, with continuous app and service delivery. Kubernetes provides a mature control-plane for deploying and operating your graph using the container images produced by this `source repo` -- which propagates new docker image versions to the [supergraph-demo-k8s-graph-ops](https://github.com/apollographql/supergraph-demo-k8s-graph-ops) `config repo`, with `kustomize` configs to deploy to Kubernetes for `dev`, `stage`, and `prod` environments.
+
+## Open Telemetry
+
+```
+make docker-up-otel-collector
+
+make smoke
+```
+
+browse to [http://localhost:9411/](http://localhost:9411/)
+
+![opentelemetry](docs/media/opentelemetry.png)
+
+More info:
+
+* Docker compose file: [docker-compose.otel-collector.yml](docker-compose.otel-collector.yml)
+* Helper library: [supergraph-demo-opentelemetry](https://github.com/prasek/supergraph-demo-opentelemetry)
+  * See usage in:
+    * [router/router.js](router/router.js)
+    * [subgraphs/products/products.js](subgraphs/products/products.js)
+* Docs: [Open Telemetry for Apollo Federation](https://www.apollographql.com/docs/federation/opentelemetry/)
 
 ## Learn More
 
@@ -710,4 +732,4 @@ Apollo tools and services help you develop, maintain, operate, and scale your da
 Learn more:
 
 * [Shipping faster with managed federation and schema checks](https://www.apollographql.com/docs/studio/)
-* [Kubernetes-native GraphOps](https://github.com/apollographql/supergraph-demo-k8s-graphops)
+* [Kubernetes-native GraphOps](https://github.com/apollographql/supergraph-demo-k8s-graph-ops)

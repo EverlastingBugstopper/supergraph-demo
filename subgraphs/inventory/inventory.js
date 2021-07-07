@@ -1,3 +1,19 @@
+// Open Telemetry (optional)
+const { ApolloOpenTelemetry } = require('supergraph-demo-opentelemetry');
+
+if (process.env.APOLLO_OTEL_EXPORTER_TYPE) {
+  new ApolloOpenTelemetry({
+    type: 'subgraph',
+    name: 'inventory',
+    exporter: {
+      type: process.env.APOLLO_OTEL_EXPORTER_TYPE, // console, zipkin, collector
+      host: process.env.APOLLO_OTEL_EXPORTER_HOST,
+      port: process.env.APOLLO_OTEL_EXPORTER_PORT,
+    }
+  }).setupInstrumentation();
+}
+
+// Main
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
 const { ApolloServer, gql, ApolloError } = require('apollo-server');
@@ -5,24 +21,16 @@ const { buildFederatedSchema } = require('@apollo/federation');
 
 const port = process.env.APOLLO_PORT || 4000;
 
-class DeliveryEstimates {
-    constructor() {
-        this.estimatedDelivery = "5/1/2019";
-        this.fastestDelivery = "5/1/2019";
-    }
-}
+const delivery = [
+    { id: 'apollo-federation', estimatedDelivery: '6/25/2021', fastestDelivery: '6/24/2021' },
+    { id: 'apollo-studio', estimatedDelivery: '6/25/2021', fastestDelivery: '6/24/2021' },
+]
 
 const typeDefs = gql(readFileSync('inventory.graphql', { encoding: 'utf-8' }));
 const resolvers = {
     Product: {
         delivery: (product, args, context) => {
-            //Validate Product has external information as per @requires
-            if (product.id != 'federation') throw new ApolloError("product.id was not 'federation'");
-            if (product.dimensions.size != '1') throw new ApolloError("product.dimensions.size was not '1'");
-            if (product.dimensions.weight != 1) throw new ApolloError("product.dimensions.weight was not '1'");
-            if (args.zip != '94111') throw new ApolloError("Prodct.delivery input zip was not '94111'");
-
-            return new DeliveryEstimates();
+            return delivery.find(p => p.id == product.id);
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "supergraph-router",
-  "version": "1.1.2",
+  "version": "1.1.8",
   "description": "",
   "main": "router.js",
   "scripts": {
@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@apollo/gateway": "0.33.0",
-    "apollo-server": "2.25.2",
-    "graphql": "15.5.0"
+    "apollo-server": "3.0.0-rc.1",
+    "graphql": "15.5.1"
   },
   "keywords": [],
   "author": "",

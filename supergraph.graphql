@@ -1,6 +1,7 @@
 schema
   @core(feature: "https://specs.apollo.dev/core/v0.1"),
-  @core(feature: "https://specs.apollo.dev/join/v0.1")
+  @core(feature: "https://specs.apollo.dev/join/v0.1"),
+  @core(feature: "https://specs.apollo.dev/tag/v0.1")
 {
   query: Query
 }
@@ -16,8 +17,6 @@ directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
 directive @join__graph(name: String!, url: String!) on ENUM_VALUE
 
 directive @tag(name: String!) repeatable on FIELD_DEFINITION
-
-directive @inaccessible on FIELD_DEFINITION
 
 type DeliveryEstimates {
   estimatedDelivery: String
